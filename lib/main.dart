@@ -8,7 +8,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String message = 'Ini adalah text';
+  List<Widget> widgets = [];
+
+  int counter = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -17,21 +19,39 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: Text('Anonymous Method'),
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(message),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    message = 'Tombol sudah ditekan';
-                  });
-                },
-                child: Text('Tekan saya'),
-              ),
-            ],
-          ),
+        body: ListView(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ElevatedButton(
+                  child: Text('Tambah data'),
+                  onPressed: () {
+                    setState(() {
+                      widgets.add(Text(
+                        'data ke-' + counter.toString(),
+                        style: TextStyle(fontSize: 35),
+                      ));
+                      counter++;
+                    });
+                  },
+                ),
+                ElevatedButton(
+                  child: Text('Hapus data'),
+                  onPressed: () {
+                    setState(() {
+                      widgets.removeLast();
+                      counter--;
+                    });
+                  },
+                ),
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: widgets,
+            ),
+          ],
         ),
       ),
     );
